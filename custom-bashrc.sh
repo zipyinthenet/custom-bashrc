@@ -4,7 +4,8 @@
 cp ~/.bashrc ~/.bashrc.bak.orig
 
 #change histsize
-sed -i '/^HISTSIZE=/c\HISTSIZE=50000' ~/.bashrc
+#sed -i '/^HISTSIZE=/c\HISTSIZE=50000' ~/.bashrc
 #change histfilesize
-sed -i '/^HISTFILESIZE=/c\HISTFILESIZE=100000' ~/.bashrc
+#sed -i '/^HISTFILESIZE=/c\HISTFILESIZE=100000' ~/.bashrc
 
+cp ~/custom-bashrc/.bashrc ~/.bashrc
