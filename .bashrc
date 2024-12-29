@@ -122,21 +122,30 @@ fi
 PROMPT_COMMAND='
     EXIT_STATUS=$?
     if git rev-parse --is-inside-work-tree &>/dev/null; then
-        # Determina el estado de Git
-	GIT_MODIFIED=$(git status --porcelain 2>/dev/null | wc -l) # Cambios pendientes
-        if git diff --quiet && git diff --cached --quiet; then
-	    GIT_STATUS="✅" # Verde check
-        else
-	    GIT_STATUS="❌ ${GIT_MODIFIED} cambios" # Rojo X Número de cambios pendientes
+	# Contar archivos modificados, añadidos, eliminados
+	GIT_MODIFIED=$(git status --porcelain 2>/dev/null | grep -v "^??" | wc -l) # Cambios pendientes en git (rastreados) staged area (git add) (ficheros modificados, añadidos al indice o eliminados
+	# Contar archivos no rastreados
+	GIT_UNTRACKED=$(git status --porcelain 2>/dev/null | grep "^??" | wc -l) # Archivos no rastreados , no staged area (ficheros nuevos) (no git add realizado) (ficheros no registrado indice git)
+
+        # Determinar el mensaje de Git basado en los cambios
+        if [ "$GIT_MODIFIED" -gt 0 ]; then
+	    GIT_STATUS="❌ ${GIT_MODIFIED} cambios rastreados pendientes de staged area (git add) o de commit (git commit)"
+	elif [ "$GIT_UNTRACKED" -gt 0 ]; then
+	    GIT_STATUS="⚠️  ${GIT_UNTRACKED} archivos no rastreados (archivo nuevo, no staged area, no git add realizado)"
+	else
+	    GIT_STATUS="✅" # Verde check No hay cambios
         fi
+
         PS1_CMD1=$(__git_ps1 " (%s) ${GIT_STATUS}")
     else
         PS1_CMD1=""
     fi
+
+    # Estado del último comando ejecutado
     if [ $EXIT_STATUS -eq 0 ]; then
         CMD_STATUS="✅ LAST COMMAND"
     else
-        CMD_STATUS="❌ ERROR COMMAND"
+        CMD_STATUS="❌ ERROR LAST COMMAND"
     fi
 '
 
