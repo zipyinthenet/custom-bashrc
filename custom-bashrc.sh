@@ -6,9 +6,8 @@ sudo apt update && sudo apt upgrade && sudo apt list --upgradable && sudo apt au
 #backup original bashrc
 cp ~/.bashrc ~/.bashrc.bak.orig
 
-#download git-prompt.sh
-wget -O ~/custom-bashrc/git-prompt.sh https://github.com/git/git/raw/refs/heads/master/contrib/completion/git-prompt.sh
-cp ~/custom-bashrc/git-prompt.sh ~/.git-prompt.sh
+#download git-prompt.sh file to ~/.git-prompt.sh
+wget -O ~/.git-prompt.sh https://github.com/git/git/raw/refs/heads/master/contrib/completion/git-prompt.sh
 
 #copy .bashrc file repo github to home directory
-cp ~/custom-bashrc/.bashrc ~/.bashrc
+cp ./.bashrc ~/.bashrc
