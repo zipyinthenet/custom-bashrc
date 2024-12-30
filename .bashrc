@@ -152,3 +152,6 @@ PROMPT_COMMAND='
 # Prompt principal con colores
 PS1='[${CMD_STATUS}] \[\e[38;5;31;40m\][\t]\[\e[0m\] \[\e[94m\]->\[\e[0m\] \[\e[32m\]\u@\h\[\e[97m\]:\[\e[38;5;25m\]\w\[\e[0m\]${PS1_CMD1}\n\[\e[91m\]\$\[\e[0m\] '
 
+# autosuggestions
+bind 'TAB:menu-complete'
+bind 'set show-all-if-ambiguous on'
